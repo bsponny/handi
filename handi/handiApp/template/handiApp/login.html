@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Handi | Login</title>
+	</head>
+	<body>
+		<form method='POST' action=''>
+			{% csrf_token %}
+			<input type="text" name="username" placeholder="Username..." autofocus/>
+			<input type=password name=password placeholder"Password..." autofocus/>
+			<button type=submit>Submit</button>
+		</form>
+	</body>
+</html>
