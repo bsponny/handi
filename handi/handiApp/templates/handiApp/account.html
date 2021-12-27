@@ -1,0 +1,24 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Handi | Account</title>
+		<link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
+		<link rel="stylesheet" href="{% static 'handiApp/bootstrap.css' %}">
+	</head>
+	<body>
+		<div class="container">
+			<div class="row header-home">
+				<img src="{% static 'handiApp/photos/handiLogo.png' %}">
+				<h1>Account | {{userType}}</h1>
+			</div>
+			<a href="{% url 'handiApp:home' %}">
+			    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+				    Home
+			    </div>
+			</a>
+		</div>
+	</body>
+</html>

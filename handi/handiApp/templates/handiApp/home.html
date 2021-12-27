@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Handi | Home</title>
+		<link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
+		<link rel="stylesheet" href="{% static 'handiApp/bootstrap.css' %}">
+	</head>
+	<body>
+		<div class="container">
+			<div class="row header-home">
+				<a href="{% url 'handiApp:home' %}"><img width=80px src="{% static 'handiApp/photos/handiLogo.png' %}"></a>
+				<h1>Home | {{userType}}</h1>
+			</div>
+			<a href="{% url 'handiApp:learn' %}">
+			    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+				    Learn
+			    </div>
+			</a>
+			<a href="{% url 'handiApp:connect' %}">
+			    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+				    Connect
+			    </div>
+			</a>
+			<a href="{% url 'handiApp:feed' %}">
+			    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+				    Feed
+			    </div>
+			</a>
+			<a href="{% url 'handiApp:account' %}">
+			    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+				    Account
+			    </div>
+			</a>
+			<a href="{% url 'handiApp:community' %}">
+			    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+				    Community
+			    </div>
+			</a>
+			<a href="{% url 'handiApp:logout' %}">
+			    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+				    Logout
+			    </div>
+			</a>
+		</div>
+	</body>
+</html>
