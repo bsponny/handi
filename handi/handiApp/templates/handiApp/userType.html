@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Handi | User Types</title>
+		<link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
+		<link rel="stylesheet" href="{% static 'handiApp/bootstrap.css' %}">
+	</head>
+	<body>
+		<div class="container">
+			<div class="row header-home">
+				<a href="{% url 'handiApp:home' %}"><img width=80px src="{% static 'handiApp/photos/handiLogo.png' %}"></a>
+				<h1>User Types</h1>
+			</div>
+			<table>
+				<tr>
+					<th>Username</th>
+					<th>User Type</th>
+				</tr>
+				{% for account in accounts %}
+					<tr>
+						<form method='POST' action="{% url 'handiApp:userType' %}" class="form uniform">
+						{% csrf_token %}
+							<td>{{account.user}}</td>
+							<td>
+								<select id={{account.user}} name=userType>
+									<option value=0 {%if account.userType == 0 %} selected='selected' {% endif %}>Student</option>
+									<option value=1 {%if account.userType == 1 %} selected='selected' {% endif %}>Mentor</option>
+									<option value=2 {%if account.userType == 2 %} selected='selected' {% endif %}>Manager</option>
+								</select>
+								<input type="submit" name="setUserType" value="Set Type" class="btn btn-dashboard">
+								<input type="hidden" name="username" value={{account.user}}>
+							</td>
+						</form>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</body>
+</html>

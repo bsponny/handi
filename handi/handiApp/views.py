@@ -117,12 +117,14 @@ def feed(request):
 @login_required(login_url='handiApp:login')
 def account(request):
     if request.method == 'POST':
+        profilePic = request.POST.get('profilePic')
         firstName = request.POST.get('firstName')
         lastName = request.POST.get('lastName')
         hearingLevel = request.POST.get('hearingLevel')
         signType = request.POST.get('signType')
 
         account = get_object_or_404(Account, user=request.user)
+        account.profilePic = profilePic
         if firstName != "":
             account.firstName = firstName
         if lastName != "":
@@ -141,6 +143,7 @@ def account(request):
     elif request.user.account.userType == 3:
         userType = 'Admin'
     context = {
+        'profilePic': profilePic,
         'userType': userType,
         'firstName': request.user.account.firstName,
         'lastName': request.user.account.lastName,
@@ -198,6 +201,22 @@ def request(request, request_id):
     }
 
     return render(request, 'handiApp/request.html', context)
+
+@login_required(login_url='handiApp:login')
+def userType(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        userType = request.POST.get('userType')
+        user = get_object_or_404(User, username=username)
+        account = get_object_or_404(Account, user=user)
+        account.userType = userType
+        account.save()
+
+    accounts = Account.objects.order_by('user').exclude(userType=3)
+    context = {
+            'accounts': accounts,
+    }
+    return render(request, 'handiApp/userType.html', context)
 
 @login_required(login_url='handiApp:login')
 def community(request):

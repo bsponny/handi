@@ -44,11 +44,13 @@
 				</form>
 			</div>
 			<div>
+				{% if userType == "Student" %}
 				<a href="{% url 'handiApp:mentorRequest' %}">
 				    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
 					    Request to Become a Mentor
 				    </div>
 				</a>
+				{% endif %}
 			</div>
 		</div>
 	</body>
