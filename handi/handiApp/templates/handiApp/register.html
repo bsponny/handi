@@ -40,15 +40,15 @@
 					<div class="form-group">
 						<label for=hearingLevel>Hearing Level: </label>
 						<select id=hearingLevel name=hearingLevel>
-							<option value=1 selected='selected' >Hearing</option>
-							<option value=2 >Hard of Hearing</option>
-							<option value=3 >Deaf</option>
+							<option value=0 selected='selected' >Hearing</option>
+							<option value=1 >Hard of Hearing</option>
+							<option value=2 >Deaf</option>
 						</select>
 					</div>
 					<div class="form-group">
 						<label for=signType>Sign Language: </label>
 						<select id=signType name=signType>
-							<option value=1 selected='selected' >American Sign Language (ASL)</option>
+							<option value=0 selected='selected' >American Sign Language (ASL)</option>
 						</select>
 					</div>
 					{% for message in messages %}

@@ -7,7 +7,7 @@ def populate_user(apps, schema_editor):
     admin = User.objects.create_user(username='admin', password='handiDandi')
     admin.save()
 
-    account = Account(user=admin, userType=4, id=1)
+    account = Account(user=admin, userType=3, id=1)
     account.save()
 
 class Migration(migrations.Migration):

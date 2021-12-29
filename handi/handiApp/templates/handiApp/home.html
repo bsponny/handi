@@ -39,6 +39,13 @@
 				    Community
 			    </div>
 			</a>
+			{% if userType == "Manager" or userType == "Admin" %}
+				<a href="{% url 'handiApp:mentorRequests' %}">
+				    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+					    Mentor Requests
+				    </div>
+				</a>
+			{% endif %}
 			<a href="{% url 'handiApp:logout' %}">
 			    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
 				    Logout

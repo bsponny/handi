@@ -5,7 +5,8 @@ from django.http import HttpResponseRedirect
 from .forms import CreateUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import Account
+from .models import *
+from datetime import date
 
 from handiApp.decorators import allowed_user_types, unauthenticated_user
 from django.contrib.auth.decorators import login_required
@@ -55,13 +56,13 @@ def loginPage(request):
 
 @login_required(login_url='handiApp:login')
 def home(request):
-    if request.user.account.userType == 1:
+    if request.user.account.userType == 0:
         userType = 'Student'
-    elif request.user.account.userType == 2:
+    elif request.user.account.userType == 1:
         userType = 'Mentor'
-    elif request.user.account.userType == 3:
+    elif request.user.account.userType == 2:
         userType = 'Manager'
-    elif request.user.account.userType == 4:
+    elif request.user.account.userType == 3:
         userType = 'Admin'
     context = {
         'userType': userType,
@@ -70,13 +71,13 @@ def home(request):
 
 @login_required(login_url='handiApp:login')
 def learn(request):
-    if request.user.account.userType == 1:
+    if request.user.account.userType == 0:
         userType = 'Student'
-    elif request.user.account.userType == 2:
+    elif request.user.account.userType == 1:
         userType = 'Mentor'
-    elif request.user.account.userType == 3:
+    elif request.user.account.userType == 2:
         userType = 'Manager'
-    elif request.user.account.userType == 4:
+    elif request.user.account.userType == 3:
         userType = 'Admin'
     context = {
         'userType': userType,
@@ -85,13 +86,13 @@ def learn(request):
 
 @login_required(login_url='handiApp:login')
 def connect(request):
-    if request.user.account.userType == 1:
+    if request.user.account.userType == 0:
         userType = 'Student'
-    elif request.user.account.userType == 2:
+    elif request.user.account.userType == 1:
         userType = 'Mentor'
-    elif request.user.account.userType == 3:
+    elif request.user.account.userType == 2:
         userType = 'Manager'
-    elif request.user.account.userType == 4:
+    elif request.user.account.userType == 3:
         userType = 'Admin'
     context = {
         'userType': userType,
@@ -100,13 +101,13 @@ def connect(request):
 
 @login_required(login_url='handiApp:login')
 def feed(request):
-    if request.user.account.userType == 1:
+    if request.user.account.userType == 0:
         userType = 'Student'
-    elif request.user.account.userType == 2:
+    elif request.user.account.userType == 1:
         userType = 'Mentor'
-    elif request.user.account.userType == 3:
+    elif request.user.account.userType == 2:
         userType = 'Manager'
-    elif request.user.account.userType == 4:
+    elif request.user.account.userType == 3:
         userType = 'Admin'
     context = {
         'userType': userType,
@@ -115,28 +116,98 @@ def feed(request):
 
 @login_required(login_url='handiApp:login')
 def account(request):
-    if request.user.account.userType == 1:
+    if request.method == 'POST':
+        firstName = request.POST.get('firstName')
+        lastName = request.POST.get('lastName')
+        hearingLevel = request.POST.get('hearingLevel')
+        signType = request.POST.get('signType')
+
+        account = get_object_or_404(Account, user=request.user)
+        if firstName != "":
+            account.firstName = firstName
+        if lastName != "":
+            account.lastName = lastName
+        account.hearingLevel = hearingLevel
+        account.signType = signType
+        account.save()
+        return redirect('handiApp:account')
+
+    if request.user.account.userType == 0:
         userType = 'Student'
-    elif request.user.account.userType == 2:
+    elif request.user.account.userType == 1:
         userType = 'Mentor'
-    elif request.user.account.userType == 3:
+    elif request.user.account.userType == 2:
         userType = 'Manager'
-    elif request.user.account.userType == 4:
+    elif request.user.account.userType == 3:
         userType = 'Admin'
     context = {
         'userType': userType,
+        'firstName': request.user.account.firstName,
+        'lastName': request.user.account.lastName,
+        'hearingLevel': request.user.account.hearingLevel,
+        'signType': request.user.account.signType,
     }
     return render(request, 'handiApp/account.html', context)
 
 @login_required(login_url='handiApp:login')
+def mentorRequest(request):
+    if request.method == "POST":
+        requestDate = date.today()
+        mentorRequest = MentorRequest(requestor=request.user, requestDate=requestDate)
+        mentorRequest.save()
+        messages.success(request, f"Successfully submitted request")
+
+    context = {
+    }
+    return render(request, 'handiApp/mentorRequest.html', context)
+
+@login_required(login_url='handiApp:login')
+def mentorRequests(request):
+    messages = []
+
+    if request.method == 'POST':
+        mentorRequest = get_object_or_404(MentorRequest, pk=request.POST.get('id'))
+        mentorAccount = get_object_or_404(Account, user=mentorRequest.requestor)
+        status = request.POST.get('status')
+        if (status == 'approve'):
+            mentorAccount.userType = 1
+            mentorAccount.save()
+
+            messages.append(f"Request was approved and {mentorAccount.user.username} is now a Mentor")
+        else:
+            messages.append(f"Request was denied and {mentorAccount.user.username} is still a student")
+        mentorRequest.delete()
+
+    requests = MentorRequest.objects.all()
+    requests = requests.order_by('requestDate')
+    if requests.count() == 0:
+        messages.append("There are currently no mentor requests")
+
+    context = {'requests': requests, 'messages': messages}
+    return render(request, 'handiApp/mentorRequests.html', context)
+
+@login_required(login_url='handiApp:login')
+def request(request, request_id):
+    try:
+        mentorRequest = MentorRequest.objects.get(pk=request_id)
+    except MentorRequest.DoesNotExist:
+        raise Http404("Request does not exist")
+
+    context={
+            'mentorRequest': mentorRequest,
+    }
+
+    return render(request, 'handiApp/request.html', context)
+
+@login_required(login_url='handiApp:login')
 def community(request):
-    if request.user.account.userType == 1:
+    if request.user.account.userType == 0:
         userType = 'Student'
-    elif request.user.account.userType == 2:
+    elif request.user.account.userType == 1:
         userType = 'Mentor'
-    elif request.user.account.userType == 3:
+    elif request.user.account.userType == 2:
         userType = 'Manager'
-    elif request.user.account.userType == 4:
+    elif request.user.account.userType == 3:
         userType = 'Admin'
     context = {
         'userType': userType,

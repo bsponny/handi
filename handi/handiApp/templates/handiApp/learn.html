@@ -11,14 +11,9 @@
 	<body>
 		<div class="container">
 			<div class="row header-home">
-				<img src="{% static 'handiApp/photos/handiLogo.png' %}">
+				<a href="{% url 'handiApp:home' %}"><img width=80px src="{% static 'handiApp/photos/handiLogo.png' %}"></a>
 				<h1>Learn | {{userType}}</h1>
 			</div>
-			<a href="{% url 'handiApp:home' %}">
-			    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
-				    Home
-			    </div>
-			</a>
 		</div>
 	</body>
 </html>

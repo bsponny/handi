@@ -12,6 +12,9 @@ urlpatterns = [
     path('connect/', views.connect, name='connect'),
     path('feed/', views.feed, name='feed'),
     path('account/', views.account, name='account'),
+    path('mentorRequest/', views.mentorRequest, name='mentorRequest'),
+    path('mentorRequests/', views.mentorRequests, name='mentorRequests'),
+    path('request/<int:request_id>/', views.request, name='request'),
     path('community/', views.community, name='community'),
 ]
 

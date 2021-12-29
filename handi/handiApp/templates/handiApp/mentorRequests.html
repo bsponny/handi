@@ -1,0 +1,60 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Handi | Feed</title>
+		<link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
+		<link rel="stylesheet" href="{% static 'handiApp/bootstrap.css' %}">
+	</head>
+	<body>
+		<div class="container">
+			<div class="row header-home">
+				<a href="{% url 'handiApp:home' %}"><img width=80px src="{% static 'handiApp/photos/handiLogo.png' %}"></a>
+				<h1>Mentor Requests | {{userType}}</h1>
+			</div>
+			<div>
+			    <table class="table col-xs-12">
+				<tr>
+				    <th>Date</th>
+				    <th>Requestor</th>
+				    <th>Approve</th>
+				    <th>Deny</th>
+				</tr>
+
+				{% for request in requests %}
+				    <tr>
+					<td>
+						<p>{{request.requestDate}}</p>
+					</td>
+					<td>
+						<a href={% url 'handiApp:request' request.id %}
+						<p>{{request.requestor}}</p>
+						</a>
+					</td>
+					<td>
+					    <form method='POST'>
+						{% csrf_token %}
+						<input type="submit" value="approve" name="status" class="btn btn-dashboard">
+						<input type="hidden" name="id" value="{{ request.id }}">
+					    </form>
+					</td>
+					<td>
+					    <form method='POST'>
+						{% csrf_token %}
+						<input type="submit" value="deny" name="status" class="btn btn-danger">
+						<input type="hidden" name="id" value="{{ request.id }}">
+					    </form>
+					</td>
+				    </tr>
+				{% endfor %}
+			    </table>
+			    <br>
+			    {% for message in messages %}
+				<p class="danger-message">{{ message }}</p>
+			    {% endfor %}
+			</div>
+		</div>
+	</body>
+</html>

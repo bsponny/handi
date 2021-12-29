@@ -12,7 +12,17 @@
 		<div class="container">
 			<div class="row header-home">
 				<a href="{% url 'handiApp:home' %}"><img width=80px src="{% static 'handiApp/photos/handiLogo.png' %}"></a>
-				<h1>Feed | {{userType}}</h1>
+				<h1>Mentor Request Form for {{mentorRequest.requestor}}</h1>
+			</div>
+			<div>
+				<a href="{% url 'handiApp:mentorRequests' %}">
+				    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+					    Back
+				    </div>
+				</a>
+				{% for message in messages %}
+				    <p class="alert">{{ message }}</p>
+				{% endfor %}
 			</div>
 		</div>
 	</body>

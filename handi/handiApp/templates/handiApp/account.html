@@ -11,14 +11,45 @@
 	<body>
 		<div class="container">
 			<div class="row header-home">
-				<img src="{% static 'handiApp/photos/handiLogo.png' %}">
+				<a href="{% url 'handiApp:home' %}"><img width=80px src="{% static 'handiApp/photos/handiLogo.png' %}"></a>
 				<h1>Account | {{userType}}</h1>
 			</div>
-			<a href="{% url 'handiApp:home' %}">
-			    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
-				    Home
-			    </div>
-			</a>
+			<div>
+				<form method='POST' action='' class="form uniForm">
+				{% csrf_token %}
+					<img width=100px src={{profilePic}}>
+					<div class="form-group">
+						<label for=firstName>First Name: </label>
+						<input type="text" name="firstName" placeholder={{firstName}} class="form-control login-input" autofocus/>
+					</div>
+					<div class="form-group">
+						<label for=lastName>Last Name: </label>
+						<input type="text" name="lastName" placeholder={{lastName}} class="form-control login-input" autofocus/>
+					</div>
+					<div class="form-group">
+						<label for=hearingLevel>Hearing Level: </label>
+						<select id=hearingLevel name=hearingLevel>
+							<option value=0 {% if hearingLevel == 0 %} selected='selected' {% endif%}>Hearing</option>
+							<option value=1 {% if hearingLevel == 1 %} selected='selected' {% endif%}>Hard of Hearing</option>
+							<option value=2 {% if hearingLevel == 2 %} selected='selected' {% endif%}>Deaf</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for=signType>Sign Language: </label>
+						<select id=signType name=signType>
+							<option value=0 selected='selected' >American Sign Language (ASL)</option>
+						</select>
+					</div>
+					<input type="submit" name="Update Account" value="Update Account" class="btn btn-primary"/>
+				</form>
+			</div>
+			<div>
+				<a href="{% url 'handiApp:mentorRequest' %}">
+				    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+					    Request to Become a Mentor
+				    </div>
+				</a>
+			</div>
 		</div>
 	</body>
 </html>
