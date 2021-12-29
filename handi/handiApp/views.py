@@ -143,7 +143,7 @@ def account(request):
     elif request.user.account.userType == 3:
         userType = 'Admin'
     context = {
-        'profilePic': profilePic,
+        'profilePic': request.user.account.profilePic,
         'userType': userType,
         'firstName': request.user.account.firstName,
         'lastName': request.user.account.lastName,
