@@ -1,19 +1,86 @@
 {% load static %}
-
+{% load bootstrap_icons %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>Handi | Connect</title>
-		<link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
-		<link rel="stylesheet" href="{% static 'handiApp/bootstrap.css' %}">
-	</head>
-	<body>
-		<div class="container">
-			<div class="row header-home">
-				<a href="{% url 'handiApp:home' %}"><img width=80px src="{% static 'handiApp/photos/handiLogo.png' %}"></a>
-				<h1>Connect | {{userType}}</h1>
-			</div>
-		</div>
-	</body>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'handiApp/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
+        <title>Handi | Connect</title>
+    </head>
+    <body class="body-background">
+        <nav class="navbar">
+            <div class="row nav-header">
+                <div class="col-xs-7">
+                    <h2 class="nav-title">&nbsp;Handi</h2>
+                </div>
+                <div class="col-xs-2" onclick="toggleNav()">
+                    <span class="hamburger-left-icon">{% bs_icon 'list' size='2em' color='#EBEBEB' %}</span>
+                </div>
+            </div>
+		<a href="{% url 'handiApp:learn' %}">
+		    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+			    Learn
+		    </div>
+		</a>
+		<a href="{% url 'handiApp:account' %}">
+		    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+			    Account
+		    </div>
+		</a>
+		<a href="{% url 'handiApp:community' %}">
+		    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+			    Community
+		    </div>
+		</a>
+		{% if userType == "Manager" or userType == "Admin" %}
+			<a href="{% url 'handiApp:mentorRequests' %}">
+			    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+				    Mentor Requests
+			    </div>
+			</a>
+			<a href="{% url 'handiApp:userType' %}">
+			    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+				    User Types
+			    </div>
+			</a>
+		{% endif %}
+		<a href="{% url 'handiApp:logout' %}">
+		    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+			    Logout
+		    </div>
+		</a>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row header-home">
+                <div class="col-xs-10">
+                    <div class="header-title">
+			<a href="{% url 'handiApp:home' %}">
+			    <span class="header-title">{% bs_icon 'house-door' size='2em' color='#EBEBEB' %}</span>
+			</a>
+                        <h1>Connect | {{userType}}</h1>
+                    </div>
+                </div>
+                <div class="col-xs-2" onclick="toggleNav()">
+                    <span class="hamburger-left-icon">{% bs_icon 'list' size='2em' %}</span>
+                </div>
+            </div>
+            <div class="dashboard-items row">
+		    <h3>This is the connect page</h3>
+            </div>
+        </div>
+    </body>
+    <script>
+        let toggleNav = function() {
+            let NavBar = document.querySelector(".navbar");
+            let Container = document.querySelector(".container");
+
+            Container.classList.toggle("open");
+            NavBar.classList.toggle("open");
+        }
+    </script>
 </html>

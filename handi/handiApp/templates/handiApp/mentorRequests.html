@@ -1,60 +1,124 @@
 {% load static %}
-
+{% load bootstrap_icons %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>Handi | Feed</title>
-		<link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
-		<link rel="stylesheet" href="{% static 'handiApp/bootstrap.css' %}">
-	</head>
-	<body>
-		<div class="container">
-			<div class="row header-home">
-				<a href="{% url 'handiApp:home' %}"><img width=80px src="{% static 'handiApp/photos/handiLogo.png' %}"></a>
-				<h1>Mentor Requests | {{userType}}</h1>
-			</div>
-			<div>
-			    <table class="table col-xs-12">
-				<tr>
-				    <th>Date</th>
-				    <th>Requestor</th>
-				    <th>Approve</th>
-				    <th>Deny</th>
-				</tr>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'handiApp/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
+        <title>Handi | Mentor Requests</title>
+    </head>
+    <body class="body-background">
+        <nav class="navbar">
+            <div class="row nav-header">
+                <div class="col-xs-7">
+                    <h2 class="nav-title">&nbsp;Handi</h2>
+                </div>
+                <div class="col-xs-2" onclick="toggleNav()">
+                    <span class="hamburger-left-icon">{% bs_icon 'list' size='2em' color='#EBEBEB' %}</span>
+                </div>
+            </div>
+		<a href="{% url 'handiApp:learn' %}">
+		    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+			    Learn
+		    </div>
+		</a>
+		<a href="{% url 'handiApp:connect' %}">
+		    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+			    Connect
+		    </div>
+		</a>
+		<a href="{% url 'handiApp:account' %}">
+		    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+			    Account
+		    </div>
+		</a>
+		<a href="{% url 'handiApp:community' %}">
+		    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+			    Community
+		    </div>
+		</a>
+		{% if userType == "Manager" or userType == "Admin" %}
+			<a href="{% url 'handiApp:userType' %}">
+			    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+				    User Types
+			    </div>
+			</a>
+		{% endif %}
+		<a href="{% url 'handiApp:logout' %}">
+		    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+			    Logout
+		    </div>
+		</a>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row header-home">
+                <div class="col-xs-10">
+                    <div class="header-title">
+			<a href="{% url 'handiApp:home' %}">
+			    <span class="header-title">{% bs_icon 'house-door' size='2em' color='#EBEBEB' %}</span>
+			</a>
+                        <h1>Mentor Requests</h1>
+                    </div>
+                </div>
+                <div class="col-xs-2" onclick="toggleNav()">
+                    <span class="hamburger-left-icon">{% bs_icon 'list' size='2em' %}</span>
+                </div>
+            </div>
+            <div class="dashboard-items row">
+		    <table class="table col-xs-12">
+			<tr>
+			    <th>Date</th>
+			    <th>Requestor</th>
+			    <th>Approve</th>
+			    <th>Deny</th>
+			</tr>
 
-				{% for request in requests %}
-				    <tr>
-					<td>
-						<p>{{request.requestDate}}</p>
-					</td>
-					<td>
-						<a href={% url 'handiApp:request' request.id %}
-						<p>{{request.requestor}}</p>
-						</a>
-					</td>
-					<td>
-					    <form method='POST'>
-						{% csrf_token %}
-						<input type="submit" value="approve" name="status" class="btn btn-dashboard">
-						<input type="hidden" name="id" value="{{ request.id }}">
-					    </form>
-					</td>
-					<td>
-					    <form method='POST'>
-						{% csrf_token %}
-						<input type="submit" value="deny" name="status" class="btn btn-danger">
-						<input type="hidden" name="id" value="{{ request.id }}">
-					    </form>
-					</td>
-				    </tr>
-				{% endfor %}
-			    </table>
-			    <br>
-			    {% for message in messages %}
-				<p class="danger-message">{{ message }}</p>
-			    {% endfor %}
-			</div>
-		</div>
-	</body>
+			{% for request in requests %}
+			    <tr>
+				<td>
+					<p>{{request.requestDate}}</p>
+				</td>
+				<td>
+					<a href={% url 'handiApp:request' request.id %}
+					<p class="link">{{request.requestor}}</p>
+					</a>
+				</td>
+				<td>
+				    <form method='POST'>
+					{% csrf_token %}
+					<input type="submit" value="Approve" name="status" class="btn btn-dashboard">
+					<input type="hidden" name="id" value="{{ request.id }}">
+				    </form>
+				</td>
+				<td>
+				    <form method='POST'>
+					{% csrf_token %}
+					<input type="submit" value="Deny" name="status" class="btn btn-danger">
+					<input type="hidden" name="id" value="{{ request.id }}">
+				    </form>
+				</td>
+			    </tr>
+			{% endfor %}
+		    </table>
+		    <br>
+		    {% for message in messages %}
+			<p class="danger-message">{{ message }}</p>
+		    {% endfor %}
+            </div>
+        </div>
+    </body>
+    <script>
+        let toggleNav = function() {
+            let NavBar = document.querySelector(".navbar");
+            let Container = document.querySelector(".container");
+
+            Container.classList.toggle("open");
+            NavBar.classList.toggle("open");
+        }
+    </script>
 </html>

@@ -1,15 +1,68 @@
+.header-row {
+	background-color: #c55a11;
+	color: #F4F4F4;
+	height: 25vh;
+	display:flex;
+	margin-bottom: 30px;
+}
+.header-home {
+	background-color: #c55a11;
+	color: #F4F4F4;
+	height: 10vh;
+	display:flex;
+	margin-bottom: 30px;
+}
+.header-home h1 {
+	font-size: 26px;
+	padding-right: 0px;
+}
+.header-row .header-col, .header-home.header-col {
+	margin-top:auto;
+	padding-left: 35px;
+	padding-bottom: 35px;
+	justify-content: space-between;
+}
+.btn.btn-primary {
+	border: none;
+	background-color: #c55a11;
+	color: white;
+	padding: 15px 5px;
+	width: 100%;
+	margin-top: 15px;
+}
 body {
 	overflow-x: hidden;
 	overflow-y: hidden;
 	position:fixed;
 }
+.login-input {
+	flex-shrink: 0;
+	min-width: 100%;
+	min-height: 100%;
+}
+
+.btn.btn-primary:focus, .btn.btn-primary:active {
+	color: white;
+	background-color: #c55a11;
+}
+
+.login-input:focus {
+	border-color: #32C36C;
+}
+
+.link {
+	color: #c55a11;
+}
 
 div.text-danger > p, p.text-danger {
 	color: #FE5D67 !important;
 }
 
-div.text-danger > p, p.text-danger {
-	color: #FE5D67 !important;
+.dashboard-item {
+	background-color: #EBEBEB;
+	color: #2C3E4B;
+	padding: 15px 20px;
+	margin: 10px 0px;
 }
 
 table {
@@ -23,76 +76,6 @@ td, th {
 	text-align: left;
 	padding: 8px;
 }
-
-nav hr {
-	margin: 5px 0;
-	border-color: #2C3E4B;
-}
-
-.header-row {
-	background-color: #c55a11;
-	color: #F4F4F4;
-	height: 25vh;
-	display:flex;
-	margin-bottom: 30px;
-}
-
-.header-home {
-	background-color: #c55a11;
-	color: #F4F4F4;
-	height: 10vh;
-	display:flex;
-	margin-bottom: 30px;
-}
-
-.header-home h1 {
-	font-size: 26px;
-	padding-right: 0px;
-}
-
-.header-row .header-col, .header-home.header-col {
-	margin-top:auto;
-	padding-left: 35px;
-	padding-bottom: 35px;
-	justify-content: space-between;
-}
-
-.btn.btn-primary {
-	border: none;
-	background-color: #ECF0FE;
-	color: #6585F6;
-	padding: 15px 5px;
-	width: 100%;
-	margin-top: 15px;
-}
-
-.login-input {
-	height: 50px;
-	color: #2C3E4B;
-	border: 1px solid #EBEBEB;
-	background-color: #F4F4F4;
-}
-
-.btn.btn-primary:focus, .btn.btn-primary:active {
-	color: white;
-	background-color: #6585F6;
-}
-
-.login-input:focus {
-	border-color: #32C36C;
-}
-
-.link {
-	color: #c55a11;
-}
-
-.dashboard-item {
-	background-color: #EBEBEB;
-	color: #2C3E4B;
-	padding: 15px 20px;
-	margin: 10px 0px;
-}
-
 .login-image {
 	width: 100vw;
 	margin-left: -15px;
@@ -102,23 +85,19 @@ nav hr {
 	vertical-align: middle;
 	margin-bottom: 3px;
 }
-
 .hamburger-left-icon, .header-title {
 	height: 100%;
 	display: flex;
 	align-items: center;
 }
-
 .hamburger-left-icon .bi {
 	margin: 0;
 }
-
 .header-title > h1 {
 	margin: 0;
 }
-
 .navbar {
-	background-color: #0DBABA;
+	background-color: #c55a11;
 	position: absolute;
 	z-index: 100;
 	transition-property: all;
@@ -128,7 +107,6 @@ nav hr {
 	transform: translateX(100%);
 
 }
-
 .container {
 	transition-property: all;
 	transition-duration: .5s;
@@ -137,56 +115,49 @@ nav hr {
 	height: 100vh;
 	overflow-y: scroll;
 }
-
 .navbar.open {
 	transform: translateX(20%);
 }
-
 .container.open {
 	transform: scale(0.9) translateX(-20%); 
 }
-
 .body-background {
 	background-color: #2C3E4B;
 }
-
 .navbar .hamburger-left-icon {
 	height: 63px; 
 	margin-top: 15px;
 }
-
 .nav-title {
 	height: 63px;
 	display: inline-block;
 	vertical-align: middle;
 	color: #EBEBEB;
 }
-
 .dashboard-photo {
 	display: flex;
 	justify-content: center;
 }
-
 .dashboard-buttons-row {
 	display: flex;
 	justify-content: space-around;
 }
-
 .btn-dashboard {
 	padding: 8px 15px;
-	background-color: #0DBABA;
+	background-color: #c55a11;
 	color: white;
 }
-
+nav hr {
+	margin: 5px 0;
+	border-color: #2C3E4B;
+}
 .nav-items {
 	overflow-y: scroll;
 	max-height: 90%;
 }
-
 .danger-message {
 	color:#FE5D67;
 }
-
 .btn-danger {
-	background-color: #FE5D67;
+	background-color: #ff1100;
 }

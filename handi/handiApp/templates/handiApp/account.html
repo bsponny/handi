@@ -1,57 +1,121 @@
 {% load static %}
-
+{% load bootstrap_icons %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>Handi | Account</title>
-		<link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
-		<link rel="stylesheet" href="{% static 'handiApp/bootstrap.css' %}">
-	</head>
-	<body>
-		<div class="container">
-			<div class="row header-home">
-				<a href="{% url 'handiApp:home' %}"><img width=80px src="{% static 'handiApp/photos/handiLogo.png' %}"></a>
-				<h1>Account | {{userType}}</h1>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'handiApp/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
+        <title>Handi | Account</title>
+    </head>
+    <body class="body-background">
+        <nav class="navbar">
+            <div class="row nav-header">
+                <div class="col-xs-7">
+                    <h2 class="nav-title">&nbsp;Handi</h2>
+                </div>
+                <div class="col-xs-2" onclick="toggleNav()">
+                    <span class="hamburger-left-icon">{% bs_icon 'list' size='2em' color='#EBEBEB' %}</span>
+                </div>
+            </div>
+		<a href="{% url 'handiApp:learn' %}">
+		    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+			    Learn
+		    </div>
+		</a>
+		<a href="{% url 'handiApp:connect' %}">
+		    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+			    Connect
+		    </div>
+		</a>
+		<a href="{% url 'handiApp:community' %}">
+		    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+			    Community
+		    </div>
+		</a>
+		{% if userType == "Manager" or userType == "Admin" %}
+			<a href="{% url 'handiApp:mentorRequests' %}">
+			    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+				    Mentor Requests
+			    </div>
+			</a>
+			<a href="{% url 'handiApp:userType' %}">
+			    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+				    User Types
+			    </div>
+			</a>
+		{% endif %}
+		<a href="{% url 'handiApp:logout' %}">
+		    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+			    Logout
+		    </div>
+		</a>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row header-home">
+                <div class="col-xs-10">
+                    <div class="header-title">
+			<a href="{% url 'handiApp:home' %}">
+			    <span class="header-title">{% bs_icon 'house-door' size='2em' color='#EBEBEB' %}</span>
+			</a>
+                        <h1>Account | {{userType}}</h1>
+                    </div>
+                </div>
+                <div class="col-xs-2" onclick="toggleNav()">
+                    <span class="hamburger-left-icon">{% bs_icon 'list' size='2em' %}</span>
+                </div>
+            </div>
+            <div class="dashboard-items row">
+		<form method='POST' action='' class="form uniForm">
+		{% csrf_token %}
+			<img width=100px src={{profilePic}}>
+			<div class="form-group">
+				<label for=firstName>First Name: </label>
+				<input type="text" name="firstName" placeholder={{firstName}} class="form-control login-input" autofocus/>
 			</div>
-			<div>
-				<form method='POST' action='' class="form uniForm">
-				{% csrf_token %}
-					<img width=100px src={{profilePic}}>
-					<div class="form-group">
-						<label for=firstName>First Name: </label>
-						<input type="text" name="firstName" placeholder={{firstName}} class="form-control login-input" autofocus/>
-					</div>
-					<div class="form-group">
-						<label for=lastName>Last Name: </label>
-						<input type="text" name="lastName" placeholder={{lastName}} class="form-control login-input" autofocus/>
-					</div>
-					<div class="form-group">
-						<label for=hearingLevel>Hearing Level: </label>
-						<select id=hearingLevel name=hearingLevel>
-							<option value=0 {% if hearingLevel == 0 %} selected='selected' {% endif%}>Hearing</option>
-							<option value=1 {% if hearingLevel == 1 %} selected='selected' {% endif%}>Hard of Hearing</option>
-							<option value=2 {% if hearingLevel == 2 %} selected='selected' {% endif%}>Deaf</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for=signType>Sign Language: </label>
-						<select id=signType name=signType>
-							<option value=0 selected='selected' >American Sign Language (ASL)</option>
-						</select>
-					</div>
-					<input type="submit" name="Update Account" value="Update Account" class="btn btn-primary"/>
-				</form>
+			<div class="form-group">
+				<label for=lastName>Last Name: </label>
+				<input type="text" name="lastName" placeholder={{lastName}} class="form-control login-input" autofocus/>
 			</div>
-			<div>
-				{% if userType == "Student" %}
-				<a href="{% url 'handiApp:mentorRequest' %}">
-				    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
-					    Request to Become a Mentor
-				    </div>
-				</a>
-				{% endif %}
+			<div class="form-group">
+				<label for=hearingLevel>Hearing Level: </label>
+				<select id=hearingLevel name=hearingLevel>
+					<option value=0 {% if hearingLevel == 0 %} selected='selected' {% endif%}>Hearing</option>
+					<option value=1 {% if hearingLevel == 1 %} selected='selected' {% endif%}>Hard of Hearing</option>
+					<option value=2 {% if hearingLevel == 2 %} selected='selected' {% endif%}>Deaf</option>
+				</select>
 			</div>
-		</div>
-	</body>
+			<div class="form-group">
+				<label for=signType>Sign Language: </label>
+				<select id=signType name=signType>
+					<option value=0 selected='selected' >American Sign Language (ASL)</option>
+				</select>
+			</div>
+			<input type="submit" name="Update Account" value="Update Account" class="btn btn-primary"/>
+		</form>
+
+		{% if userType == "Student" %}
+		<a href="{% url 'handiApp:mentorRequest' %}">
+		    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+			    Request to Become a Mentor
+		    </div>
+		</a>
+		{% endif %}
+
+            </div>
+        </div>
+    </body>
+    <script>
+        let toggleNav = function() {
+            let NavBar = document.querySelector(".navbar");
+            let Container = document.querySelector(".container");
+
+            Container.classList.toggle("open");
+            NavBar.classList.toggle("open");
+        }
+    </script>
 </html>

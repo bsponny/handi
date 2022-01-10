@@ -1,33 +1,44 @@
 {% load static %}
-
+{% load bootstrap_icons %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>Handi | Feed</title>
-		<link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
-		<link rel="stylesheet" href="{% static 'handiApp/bootstrap.css' %}">
-	</head>
-	<body>
-		<div class="container">
-			<div class="row header-home">
-				<a href="{% url 'handiApp:home' %}"><img width=80px src="{% static 'handiApp/photos/handiLogo.png' %}"></a>
-				<h1>Mentor Request Form</h1>
-			</div>
-			<div>
-				<a href="{% url 'handiApp:account' %}">
-				    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
-					    Back
-				    </div>
-				</a>
-				<form method='POST' action='' class="form uniForm">
-				{% csrf_token %}
-					<input type="submit" name="Submit Request" value="Submit Request" class="btn btn-primary"/>
-				</form>
-				{% for message in messages %}
-				    <p class="alert">{{ message }}</p>
-				{% endfor %}
-			</div>
-		</div>
-	</body>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'handiApp/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
+        <title>Handi | Mentor Request Form</title>
+    </head>
+    <body class="body-background">
+        <div class="container">
+            <div class="row header-home">
+                <div class="col-xs-10">
+                    <div class="header-title">
+			<a href="{% url 'handiApp:home' %}">
+			    <span class="header-title">{% bs_icon 'house-door' size='2em' color='#EBEBEB' %}</span>
+			</a>
+                        <h1>Mentor Request Form for {{username}}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-items row">
+		<a href="{% url 'handiApp:account' %}">
+		    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+			    Back
+		    </div>
+		</a>
+
+		<form method='POST' action='' class="form uniForm">
+		{% csrf_token %}
+			<input type="submit" name="Submit Request" value="Submit Request" class="btn btn-primary"/>
+		</form>
+
+		{% for message in messages %}
+		    <p class="alert">{{ message }}</p>
+		{% endfor %}
+            </div>
+        </div>
+    </body>
 </html>

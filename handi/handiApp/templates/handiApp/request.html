@@ -1,29 +1,36 @@
 {% load static %}
-
+{% load bootstrap_icons %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>Handi | Feed</title>
-		<link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
-		<link rel="stylesheet" href="{% static 'handiApp/bootstrap.css' %}">
-	</head>
-	<body>
-		<div class="container">
-			<div class="row header-home">
-				<a href="{% url 'handiApp:home' %}"><img width=80px src="{% static 'handiApp/photos/handiLogo.png' %}"></a>
-				<h1>Mentor Request Form for {{mentorRequest.requestor}}</h1>
-			</div>
-			<div>
-				<a href="{% url 'handiApp:mentorRequests' %}">
-				    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
-					    Back
-				    </div>
-				</a>
-				{% for message in messages %}
-				    <p class="alert">{{ message }}</p>
-				{% endfor %}
-			</div>
-		</div>
-	</body>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'handiApp/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
+	<title>Handi | Request - {{mentorRequest.requestor}}</title>
+    </head>
+    <body class="body-background">
+        <div class="container">
+            <div class="row header-home">
+                <div class="col-xs-10">
+                    <div class="header-title">
+			<a href="{% url 'handiApp:home' %}">
+			    <span class="header-title">{% bs_icon 'house-door' size='2em' color='#EBEBEB' %}</span>
+			</a>
+			    <h1>Mentor Request For {{mentorRequest.requestor}}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-items row">
+		    <a href="{% url 'handiApp:mentorRequests' %}">
+			    <span>{% bs_icon 'arrow-left-short' size='2em' color='#c55a11' %}</span>
+		    </a>
+
+		    <h3>Name: {{account.firstName}} {{account.lastName}}</h3>
+		    <h3>Date Requested: {{mentorRequest.requestDate}}</h3>
+            </div>
+        </div>
+    </body>
 </html>

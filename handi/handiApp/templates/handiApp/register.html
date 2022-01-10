@@ -4,16 +4,21 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Handi | Register</title>
-		<link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="{% static 'handiApp/bootstrap.css' %}">
+		<link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
+		<title>Handi | Register</title>
 	</head>
 	<body>
 		<div class="container">
-			<div class="row header-home">
-				<img class="logoPic" src="{% static 'handiApp/photos/handiLogo.png' %}">
-				<h1>Register</h1>
+			<div class="row header-row">
+				<div class="col-xs-12 header-col">
+					<img src="{% static 'handiApp/photos/fullHandi.png' %}" width=100px>
+					<br>
+				</div>
 			</div>
+			<h1>Create an Account</h1>
 			<form method='POST' action='' class="form uniForm">
 				{% csrf_token %}
 					<div class="form-group">

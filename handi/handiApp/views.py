@@ -66,6 +66,8 @@ def home(request):
         userType = 'Admin'
     context = {
         'userType': userType,
+        'balance': request.user.account.balance,
+        'username': request.user.username,
     }
     return render(request, 'handiApp/home.html', context)
 
@@ -98,21 +100,6 @@ def connect(request):
         'userType': userType,
     }
     return render(request, 'handiApp/connect.html', context)
-
-@login_required(login_url='handiApp:login')
-def feed(request):
-    if request.user.account.userType == 0:
-        userType = 'Student'
-    elif request.user.account.userType == 1:
-        userType = 'Mentor'
-    elif request.user.account.userType == 2:
-        userType = 'Manager'
-    elif request.user.account.userType == 3:
-        userType = 'Admin'
-    context = {
-        'userType': userType,
-    }
-    return render(request, 'handiApp/feed.html', context)
 
 @login_required(login_url='handiApp:login')
 def account(request):
@@ -161,18 +148,28 @@ def mentorRequest(request):
         messages.success(request, f"Successfully submitted request")
 
     context = {
+            'username': request.user.username,
     }
     return render(request, 'handiApp/mentorRequest.html', context)
 
 @login_required(login_url='handiApp:login')
 def mentorRequests(request):
+    if request.user.account.userType == 0:
+        userType = 'Student'
+    elif request.user.account.userType == 1:
+        userType = 'Mentor'
+    elif request.user.account.userType == 2:
+        userType = 'Manager'
+    elif request.user.account.userType == 3:
+        userType = 'Admin'
+
     messages = []
 
     if request.method == 'POST':
         mentorRequest = get_object_or_404(MentorRequest, pk=request.POST.get('id'))
         mentorAccount = get_object_or_404(Account, user=mentorRequest.requestor)
         status = request.POST.get('status')
-        if (status == 'approve'):
+        if (status == 'Approve'):
             mentorAccount.userType = 1
             mentorAccount.save()
 
@@ -186,35 +183,52 @@ def mentorRequests(request):
     if requests.count() == 0:
         messages.append("There are currently no mentor requests")
 
-    context = {'requests': requests, 'messages': messages}
+    context = {
+            'requests': requests, 
+            'messages': messages,
+            'userType': userType,
+    }
     return render(request, 'handiApp/mentorRequests.html', context)
 
 @login_required(login_url='handiApp:login')
 def request(request, request_id):
     try:
         mentorRequest = MentorRequest.objects.get(pk=request_id)
+        account = get_object_or_404(Account, user=mentorRequest.requestor)
     except MentorRequest.DoesNotExist:
         raise Http404("Request does not exist")
 
+    
     context={
             'mentorRequest': mentorRequest,
+            'account': account,
     }
 
     return render(request, 'handiApp/request.html', context)
 
 @login_required(login_url='handiApp:login')
 def userType(request):
+    if request.user.account.userType == 0:
+        userType = 'Student'
+    elif request.user.account.userType == 1:
+        userType = 'Mentor'
+    elif request.user.account.userType == 2:
+        userType = 'Manager'
+    elif request.user.account.userType == 3:
+        userType = 'Admin'
+
     if request.method == 'POST':
         username = request.POST.get('username')
-        userType = request.POST.get('userType')
+        notMyUserType = request.POST.get('userType')
         user = get_object_or_404(User, username=username)
         account = get_object_or_404(Account, user=user)
-        account.userType = userType
+        account.userType = notMyUserType
         account.save()
 
     accounts = Account.objects.order_by('user').exclude(userType=3)
     context = {
             'accounts': accounts,
+            'userType': userType,
     }
     return render(request, 'handiApp/userType.html', context)
 

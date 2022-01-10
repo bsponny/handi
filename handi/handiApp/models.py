@@ -9,7 +9,7 @@ class Account(models.Model):
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     userType = models.IntegerField(default=0) #0 = student, 1 = mentor, 2 = manager, 3 = admin
     hearingLevel = models.IntegerField(default=0) #0 = hearing, 1 = hard of hearing, 2 = deaf
-    profilePic = models.ImageField(upload_to ='uploads/', null=True)
+    profilePic = models.ImageField(upload_to ='uploads/', default='media/handiApp/blankProfilePic.png')
     signType = models.IntegerField(default=0) #1 = ASL
     #friends or something like that
 

@@ -4,36 +4,39 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Handi | Login</title>
-		<link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="{% static 'handiApp/bootstrap.css' %}">
+		<link rel="stylesheet" href="{% static 'handiApp/style.css' %}">
+		<title>Handi | Login</title>
 	</head>
 	<body>
 		<div class="container">
 			<div class="row header-row">
-				<img src="{% static 'handiApp/photos/fullHandi.png' %}">
+				<div class="col-xs-12 header-col">
+					<img src="{% static 'handiApp/photos/fullHandi.png' %}" width=100px>
+				</div>
 			</div>
-			<div>
-				<h1>Login</h1>
-				<form method="POST" action="">
-					{% csrf_token %}
-					<div class="form-group">
-						<input type="text" name="username" placeholder="Username..." class="form-control login-input" autofocus/>
-					</div>
-					<div class="form-group">
-						<input type="password" name="password" placeholder="Password..." class="form-control login-input" autofocus/>
-					</div>
-					<div class="form-group">
-						<button class="btn btn-primary" type="submit">Submit</button>
-					</div>
+			<form method='POST' action='' class="form uniForm">
+				{% csrf_token %}
+				<div class="form-group">
+					<input type="text" name="username" placeholder="Username..." class="form-control login-input" autofocus/>
+				</div>
+				<div class="form-group">
+					<input type="password" name="password" placeholder="Password..." class="form-control login-input"/>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-primary" type="submit">Submit</button>
+				</div>
+				<div class="text-danger">
 					{% for message in messages %}
 						<p class="text-danger">{{message}}</p>
 					{% endfor %}
-					<div class="form-group">
-					    <p>Don't have an account? &nbsp;<a href="{% url 'handiApp:register' %}" class="link">Sign Up</a></p>
-					</div>
-				</form>
-			</div>
+				</div>
+				<div class="form-group">
+					<p>Don't have an account? &nbsp;<a href="{% url 'handiApp:register' %}" class="link">Sign Up</a></p>
+				</div>
+			</form>
 		</div>
 	</body>
 </html>
