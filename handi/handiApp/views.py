@@ -56,6 +56,9 @@ def loginPage(request):
 
 @login_required(login_url='handiApp:login')
 def home(request):
+    adminAccount = Account.objects.get(pk=1)
+    companyBalance = adminAccount.balance
+
     if request.user.account.userType == 0:
         userType = 'Student'
     elif request.user.account.userType == 1:
@@ -64,10 +67,12 @@ def home(request):
         userType = 'Manager'
     elif request.user.account.userType == 3:
         userType = 'Admin'
+
     context = {
         'userType': userType,
         'balance': request.user.account.balance,
         'username': request.user.username,
+        'companyBalance': companyBalance,
     }
     return render(request, 'handiApp/home.html', context)
 
