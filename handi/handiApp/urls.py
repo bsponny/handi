@@ -16,5 +16,6 @@ urlpatterns = [
     path('request/<int:request_id>/', views.request, name='request'),
     path('userType/', views.userType, name='userType'),
     path('community/', views.community, name='community'),
+    path('managerDashboard/', views.managerDashboard, name='managerDashboard'),
 ]
 

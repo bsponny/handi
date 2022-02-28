@@ -253,6 +253,28 @@ def community(request):
     return render(request, 'handiApp/community.html', context)
 
 @login_required(login_url='handiApp:login')
+def managerDashboard(request):
+    adminAccount = Account.objects.get(pk=1)
+    companyBalance = adminAccount.balance
+
+    if request.user.account.userType == 0:
+        userType = 'Student'
+    elif request.user.account.userType == 1:
+        userType = 'Mentor'
+    elif request.user.account.userType == 2:
+        userType = 'Manager'
+    elif request.user.account.userType == 3:
+        userType = 'Admin'
+
+    context = {
+        'userType': userType,
+        'balance': request.user.account.balance,
+        'username': request.user.username,
+        'companyBalance': companyBalance,
+    }
+    return render(request, 'handiApp/managerDashboard.html', context)
+
+@login_required(login_url='handiApp:login')
 def logoutUser(request):
     logout(request)
     return redirect('handiApp:login')

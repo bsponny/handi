@@ -53,6 +53,11 @@
 				    User Types
 			    </div>
 			</a>
+			<a href="{% url 'handiApp:managerDashboard' %}">
+			    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
+				    Manager Dashboard
+			    </div>
+			</a>
 		{% endif %}
 		<a href="{% url 'handiApp:logout' %}">
 		    <div class="nav-item dashboard-item" style="margin-bottom:20px;">
@@ -65,6 +70,7 @@
             <div class="row header-home">
                 <div class="col-xs-10">
                     <div class="header-title">
+			    <span class="header-title"><img src="{% static 'handiApp/photos/handiLogo.png' %}" height="70px" /></span>
                         <h1>Home | {{userType}}</h1>
                     </div>
                 </div>
@@ -72,23 +78,9 @@
                     <span class="hamburger-left-icon">{% bs_icon 'list' size='2em' %}</span>
                 </div>
             </div>
-            <div>
-                <div class="dashboard-photo">
-                    <img src="{% static 'handiApp/photos/handiLogo.png' %}" height="200px"/>
-                </div>
-            </div>
             <div class="dashboard-items row">
                 <div class="dashboard-balance col-xs-12">
-                    <h3>
-                        Account Balance:
-                    </h3>
-                    <h1>${{balance}}</h1>
-		    {% if userType == "Manager" or userType == "Admin" %}
-                    <h3>
-                        Company Balance:
-                    </h3>
-                    <h1>${{companyBalance}}</h1>
-		    {% endif %}
+			<h1>Feed will go here</h1>
                 </div>
             </div>
         </div>
